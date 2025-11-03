@@ -12,6 +12,13 @@ from pytesseract import TesseractError
 # -------------------- Configuration --------------------
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
+# The editing that NaturalVoiceSAPIAdapter did added support for natural languages but broke
+# pyttsx3 so I edited the ttsapplication to accept cli and used that.
+# It might be slightly slower than pyttsx3 but 99% of the time is spent getting and analyzing
+# the text from the screen shot. Def need to speed that up or come up with a trick to make
+# it more seemless, works for now if you set the kindle word size/line spacing up in such
+# a way to minimize turning pages while not breaking the TTSApp with to many words. Seems 
+# Stable at ~1500 words
 TTS_EXE = r"C:\Programming\CPP\NaturalVoiceSAPIAdapter\ttsapplication\TTSApplicationSample\x64\Debug\TtsApplication.exe"
 
 
@@ -20,7 +27,6 @@ CROP_TOP = 110
 CROP_RIGHT = 20
 CROP_BOTTOM = 50
 PAGE_DELAY = 0.1  # seconds
-# PAGE_DELAY = 0.5  # seconds
 
 # Prevent concurrent Tesseract invocations which can cause crashes/leaks on Windows
 ocr_lock = asyncio.Lock()

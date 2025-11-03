@@ -6,40 +6,27 @@ Features
 - Capture Kindle window text via Tesseract OCR
 - Play spoken audio via a local TTS application (configurable)
 - Designed for Windows (uses Win32 / pywinauto background capture)
-- Kindle can be in the background, but can not be minimized in order for
-the screen capture to work
+- Kindle can be in the background and the program will not focus it or interrupt your system in any way, but it can not be minimized in order for
+the screen capture to work (You can drag the tab so far down that you can only see a very small portion of the window though)
 
 Quick start
 
 1. Install prerequisites
-
- - Install Python 3.8+
+ - Install Python 3.8+ (I used 3.11)
  - Install Tesseract OCR for Windows and note the install path (default: `C:\Program Files\Tesseract-OCR`).
- - Install Python packages (probably  want to do this inside a virtualenv):
-
+ - Install Python packages (you probably want to do this inside a virtualenv):
 ```cmd
+# Upgrade pip
 python -m pip install --upgrade pip
-pip install pillow pytesseract pygetwindow pywinauto pyttsx3 p 
-# If you use parts of the code that require win32:
-pip install pywin32
+
+# Install runtime dependencies (recommended inside a virtualenv)
+python -m pip install pywinauto pygetwindow pywin32 pillow pytesseract
 ```
 
-2. Configure
-
-- Verify `pytesseract.pytesseract.tesseract_cmd` in `kindleReader.py` points to your `tesseract.exe` path.
-
-3. Run
-
-Open Kindle (Windows app) and put it on a readable page, then run:
-
+or install with:
 ```cmd
-python kindleReader.py
+python -m pip install -r requirements.txt
 ```
-
-Troubleshooting
-- If you see Tesseract errors mentioning "LEAK" or crashes, avoid running OCR concurrently and confirm your Tesseract installation and `tessdata` files are correct. The code serializes OCR calls but you can also test Tesseract separately.
-- If TTS playback blocks Ctrl+C, the code uses an async playback worker; if you have a blocking external TTS binary, consider replacing it with the Azure Speech SDK or another non-blocking TTS engine.
-- Debug images are saved as `kindle_debug_<timestamp>.png` in the working directory to help reproduce OCR issues.
 
 Notes
 - This project is Windows-oriented and uses Win32 APIs for background capture. Behavior on other OSes is not tested.
@@ -61,7 +48,10 @@ git submodule init
 git submodule update --recursive
 ```
 
+
 2. Build the native TTS engine
+- NOTE: Feel free to change my absolute path to relative or don't use at all if you have a path variable. I just cant get my path variables working rn.
+
 - Open the TTS engine folder (the submodule) and follow its README — on Windows this usually means opening the supplied Visual Studio solution or running CMake to produce an x64 build.
 - Ensure you build the application configuration you want (Debug/Release) and note the produced executable path (for example: `.../ttsapplication/x64/Debug/TtsApplication.exe`).
 

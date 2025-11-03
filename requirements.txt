@@ -1,0 +1,11 @@
+
+# Core dependencies required by the reader (install with pip)
+Pillow
+pytesseract
+pygetwindow
+pywinauto
+pywin32
+
+# Note: Tesseract OCR is a native application and must be installed separately
+# (https://github.com/tesseract-ocr/tesseract). Set pytesseract.pytesseract.tesseract_cmd
+# in `kindleReader.py` to your tesseract.exe path.
