@@ -14,10 +14,6 @@ def resource_path(rel_path):
 
 
 ######################## Get/Load Voices from server ##############################
-# Store discovered voices in a local directory next to this module
-# e.g. c:\Programming\Python\kindleReader\src\voices\voices.json
-VOICES_DIR = os.path.join(os.path.dirname(__file__), 'voices')
-VOICES_FILE = os.path.join(VOICES_DIR, 'voices.json')
 
 
 def load_voices(path: str = VOICES_FILE) -> 'VoiceStore':
@@ -68,7 +64,6 @@ async def get_voice_list(timeout: float = 2.0) -> VoiceStore:
     if not TTS_USE_TCP:
         return store
 
-    # lazy import to avoid circular import (utils <- kindleReader <- utils)
     try:
         from kindleReader import start_tts_server_once
         await start_tts_server_once()
